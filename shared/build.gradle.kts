@@ -21,11 +21,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-//                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
                 implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt"){
-                    version {
-                        strictly("1.6.0-native-mt")
-                    }
+//                    version {
+//                        strictly("1.6.0-native-mt")
+//                    }
                 }
                 implementation("com.squareup.sqldelight:runtime:1.5.3")
                 implementation("com.squareup.sqldelight:coroutines-extensions:1.5.3")

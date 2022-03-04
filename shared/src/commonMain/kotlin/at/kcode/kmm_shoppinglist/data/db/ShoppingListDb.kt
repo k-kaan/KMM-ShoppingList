@@ -20,7 +20,7 @@ class ShoppingListDb(databaseDriverFactory: DatabaseDriverFactory) {
             .mapToList()
     }
 
-    internal fun insertItems(shoppingListItem: ShoppingListItem) {
+    fun insertItems(shoppingListItem: ShoppingListItem) {
         dbQueries.insertItem(
             id = shoppingListItem.id,
             name = shoppingListItem.name,
@@ -29,9 +29,13 @@ class ShoppingListDb(databaseDriverFactory: DatabaseDriverFactory) {
         )
     }
 
-    internal fun clearDatabase() {
+    fun clearDatabase() {
         dbQueries.transaction {
             dbQueries.removeAllItems()
         }
+    }
+
+    fun updateItemState(item: ShoppingListItem) {
+        dbQueries.updateItemCheckedState(!item.isChecked, item.id)
     }
 }

@@ -14,3 +14,11 @@ DELETE FROM Items;
 
 selectAllItems:
 SELECT * FROM Items ORDER BY checked;
+
+updateItemCheckedState:
+UPDATE Items
+SET checked = ?
+WHERE id = ?;
+
+deleteItem:
+DELETE FROM Items WHERE  id = ?;

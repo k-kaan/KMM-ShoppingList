@@ -7,18 +7,21 @@ import KMPNativeCoroutinesCombine
 import KMPNativeCoroutinesRxSwift
 
 struct ContentView: View {
-    @ObservedObject var viewModel = ShoppingListViewModel(repository: ShoppingListRepo(db: ShoppingListDb(databaseDriverFactory: DatabaseDriverFactory())))
+    @ObservedObject var viewModel = ShoppingListViewModel(repository: ShoppingListRepo(databaseDriverFactory: DatabaseDriverFactory()))
 
 	var body: some View {
         NavigationView {
             List(viewModel.items) { item in
-                Text(item.name)
+                HStack{
+                    Button(action: {
+                        viewModel.updateItemState(item: item)
+                    }) {
+                        Image(systemName: item.isChecked ? "checkmark.circle" : "circle")
+                    }
+                    Text(item.name)
+                }
             }
             .navigationBarTitle("kmmShopper")
-//             .navigationBa   rItems(trailing:
-//                 Button("Reload") {
-//                     self.viewModel.loadLaunches(forceReload: true)
-//             })
         }
 	}
 }
@@ -47,5 +50,9 @@ class ShoppingListViewModel: ObservableObject {
                 print("Failed with error: \(error)")
             }
         }
+    }
+    
+    func updateItemState(item: ShoppingListItem){
+        repository.updateItemState(item: item)
     }
 }
