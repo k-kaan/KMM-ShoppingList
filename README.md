@@ -1,7 +1,10 @@
-# KMM-ShoppingList
-This is an offline shopping list for iOS and Android made by Kotlin Multiplatform. 
-The UI is built with SwiftUI/Compose and the shopping list items are stored in a sqldelight database
+# KMM-ShoppingList [WIP]
+This is an offline shopping list for iOS and Android made by **Kotlin Multiplatform**. 
 
-# add screenshots 
+The UI is built with **SwiftUI/Compose** and the shopping list items are stored in a **sqldelight** database.
 
-# See also [my post on Medium](https://kkaan.medium.com/) about this project ✍️
+<!---
+add screenshots 
+
+[comment]: <> See also [my post on Medium](https://kkaan.medium.com/) about this project ✍️
+-->
