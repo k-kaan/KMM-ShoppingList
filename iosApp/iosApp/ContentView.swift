@@ -89,16 +89,16 @@ struct AddItemModalView: View {
     @State var newItemName = ""
     
     var body: some View {
-        VStack {
-            Text("Add new item")
-            Form {
-                TextField("What do you want to get?", text: $newItemName)
-                
-                Button("Add item", action: {
-                    onAddingItem(newItemName)
-                    presentationMode.wrappedValue.dismiss()
-                })
+        NavigationView {
+            VStack {
+                Form {
+                    TextField("What do you want to get?", text: $newItemName)
+                }
             }
+            .navigationBarItems(trailing: Button("Add Item"){
+                onAddingItem(newItemName)
+                presentationMode.wrappedValue.dismiss()
+            })
         }
     }
 }
