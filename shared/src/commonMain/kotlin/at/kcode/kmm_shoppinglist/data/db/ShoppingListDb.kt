@@ -38,4 +38,10 @@ class ShoppingListDb(databaseDriverFactory: DatabaseDriverFactory) {
     fun updateItemState(item: ShoppingListItem) {
         dbQueries.updateItemCheckedState(!item.isChecked, item.id)
     }
+
+    fun deleteItem(item: ShoppingListItem) {
+        dbQueries.transaction {
+            dbQueries.deleteItem(item.id)
+        }
+    }
 }

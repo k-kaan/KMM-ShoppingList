@@ -7,21 +7,37 @@ import KMPNativeCoroutinesCombine
 import KMPNativeCoroutinesRxSwift
 
 struct ContentView: View {
+    @State private var showAddItemModal = false
     @ObservedObject var viewModel = ShoppingListViewModel(repository: ShoppingListRepo(databaseDriverFactory: DatabaseDriverFactory()))
 
 	var body: some View {
         NavigationView {
-            List(viewModel.items) { item in
-                HStack{
-                    Button(action: {
-                        viewModel.updateItemState(item: item)
-                    }) {
-                        Image(systemName: item.isChecked ? "checkmark.circle" : "circle")
+            List {
+                ForEach(viewModel.items) { item in
+                    HStack{
+                        Button(action: {
+                            viewModel.updateItemState(item: item)
+                        }) {
+                            Image(systemName: item.isChecked ? "checkmark.circle" : "circle")
+                        }
+                        Text(item.name)
                     }
-                    Text(item.name)
+                }
+                .onDelete { indexSet in
+                    viewModel.removeItem(at: indexSet)
                 }
             }
             .navigationBarTitle("kmmShopper")
+            .navigationBarItems(trailing: Button( action: {
+                self.showAddItemModal = true
+            }){
+                Image(systemName: "plus")
+            })
+            .sheet(isPresented: $showAddItemModal) {
+                AddItemModalView { text in
+                    viewModel.addNewItem(text: text)
+                }
+            }
         }
 	}
 }
@@ -52,7 +68,37 @@ class ShoppingListViewModel: ObservableObject {
         }
     }
     
+    func addNewItem(text:String) {
+        repository.insertShoppingListItemWithTextonly(text: text, id: NSUUID.init().uuidString)
+    }
+    
     func updateItemState(item: ShoppingListItem){
         repository.updateItemState(item: item)
+    }
+    
+    func removeItem(at offsets: IndexSet) {
+        let item = items[offsets[offsets.startIndex]]
+        repository.deleteShoppingListItem(item: item)
+    }
+}
+
+struct AddItemModalView: View {
+    var onAddingItem: (String) -> Void
+    
+    @Environment(\.presentationMode) var presentationMode
+    @State var newItemName = ""
+    
+    var body: some View {
+        VStack {
+            Text("Add new item")
+            Form {
+                TextField("What do you want to get?", text: $newItemName)
+                
+                Button("Add item", action: {
+                    onAddingItem(newItemName)
+                    presentationMode.wrappedValue.dismiss()
+                })
+            }
+        }
     }
 }
