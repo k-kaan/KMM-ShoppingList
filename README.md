@@ -15,4 +15,4 @@ ToBeDone:
 - improve design pattern
 - improve UI (e.g. empty state) 
 
-See also [my post on Medium](https://kkaan.medium.com/) about this project ✍️
+See also [my post on Medium](https://kkaan.medium.com/kotlin-multiplatform-a-shopping-list-for-android-ios-including-flow-a383ffa4abb7?source=friends_link&sk=49d55c9240e404443763d1f4ef9b2776) about this project ✍️
