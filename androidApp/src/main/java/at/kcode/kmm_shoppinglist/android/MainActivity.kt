@@ -41,7 +41,9 @@ class MainActivity : AppCompatActivity() {
                 Scaffold(
                     topBar = { CenteredTopBar() },
                     content = {
-                        AddItemDialog(show = showAddItemDialog) { textValue -> addNewItem(textValue) }
+                        AddItemDialog(show = showAddItemDialog) { textValue ->
+                            addNewItem(textValue)
+                        }
 
                         // receive from flow in runtime
                         val shoppingListItems: List<ShoppingListItem> by repo.getShoppingListItems().collectAsState(initial = emptyList())
@@ -145,7 +147,10 @@ class MainActivity : AppCompatActivity() {
                 .fillMaxWidth()
                 .clickable { repo.updateItemState(item) }
         ) {
-            Checkbox(checked = item.isChecked, onCheckedChange = { repo.updateItemState(item) })
+            Checkbox(
+                checked = item.isChecked,
+                onCheckedChange = { repo.updateItemState(item) }
+            )
 
             Text(item.name, fontSize = 16.sp)
         }

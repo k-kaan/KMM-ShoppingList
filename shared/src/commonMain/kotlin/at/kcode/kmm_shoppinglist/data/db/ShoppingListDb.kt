@@ -14,7 +14,12 @@ class ShoppingListDb(databaseDriverFactory: DatabaseDriverFactory) {
     fun getAllItems(): Flow<List<ShoppingListItem>> {
         return dbQueries
             .selectAllItems { id, name, timestamp, checked ->
-                ShoppingListItem(id, name, LocalDateTime.parse(timestamp), checked ?: false)
+                ShoppingListItem(
+                    id = id,
+                    name = name,
+                    timestamp = LocalDateTime.parse(timestamp),
+                    isChecked = checked ?: false
+                )
             }
             .asFlow()
             .mapToList()
